@@ -36,7 +36,6 @@ pipeline {
           sh "docker rmi ${devRegistry}/${ciGroup}/${serviceName}:${version} ${prodRegistry}/${qaGroup}/${serviceName}:${version}"
         }
       }
-    }
 
     stage ("Approve Deployment to QA") {
         steps {
