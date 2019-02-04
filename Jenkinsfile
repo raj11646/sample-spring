@@ -6,7 +6,7 @@ def groupName = "spring"
 def skipBuild = false
 def ciGroup = "dev"
 def qaGroup = "staging"
-def scanPaths = ["spring-sample1"]
+// def scanPaths = ["spring-sample1"]
 def devRegistry = "raj11646"
 def prodRegistry = "rajmca10"
 def buildServiceUrl = "https://5yfganz8bb.execute-api.us-east-1.amazonaws.com/prod/service/admin-cli/builds"
@@ -26,19 +26,7 @@ pipeline {
           def date = new Date()
           def format = dateFormat.format(date)
           version = VersionNumber (versionNumberString: '${BUILDS_TODAY}', versionPrefix: "${serviceName}-b${format}.")
-          adminVersion = "${ADMIN_CLI_VERSION}"
-
-          if (adminVersion == "latest") {
-            def lastTagName = sh (
-              script: "curl -H 'x-api-key: ${AWS_SECRET_KEY}' ${buildServiceUrl}/master",
-              returnStdout: true
-            )
-            def lastBuildTag = lastTagName.replace("\"", "")
-            if (lastBuildTag != null) {
-              adminVersion = lastBuildTag
-            }
           }
-        }
         echo "Docker - build, tag & publish"
         withEnv(["GO_DEPENDENCY_LABEL_DIRECTOR_BASE=${adminVersion}"]) {
           sh "dockerize -template Dockerfile.tmpl:Dockerfile"
