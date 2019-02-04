@@ -28,13 +28,13 @@ pipeline {
           version = VersionNumber (versionNumberString: '${BUILDS_TODAY}', versionPrefix: "${serviceName}-b${format}.")
           }
         echo "Docker - build, tag & publish"
-        withEnv(["GO_DEPENDENCY_LABEL_DIRECTOR_BASE=${adminVersion}"]) {
+  
           sh "dockerize -template Dockerfile.tmpl:Dockerfile"
           sh "docker build -t ${devRegistry}/${ciGroup}/${serviceName}:${version} -t ${prodRegistry}/${qaGroup}/${serviceName}:${version} ."
           sh "docker push ${devRegistry}/${ciGroup}/${serviceName}:${version}"
           sh "docker push ${prodRegistry}/${qaGroup}/${serviceName}:${version}"
           sh "docker rmi ${devRegistry}/${ciGroup}/${serviceName}:${version} ${prodRegistry}/${qaGroup}/${serviceName}:${version}"
-        }
+        
       }
     }
 
