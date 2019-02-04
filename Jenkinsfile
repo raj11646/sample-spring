@@ -1,20 +1,19 @@
 #!/usr/bin/env groovy
 import java.text.SimpleDateFormat
 def version = ""
-def serviceName = "ansible"
-def groupName = "ansible"
+def serviceName = "spring"
+def groupName = "spring"
 def skipBuild = false
-def ciGroup = "csit"
+def ciGroup = "dev"
 def qaGroup = "staging"
-<<<<<<< HEAD
+
 //def scanPaths = ["spring-sample1"]
 def devRegistry = "raj11646"
 def prodRegistry = "rajmca10"
-=======
+
 def scanPaths = ["circuit-ansible-1"]
-def devRegistry = "devaxregistry.azurecr.io"
-def prodRegistry = "prodaxregistry.azurecr.io"
->>>>>>> e2070e32e5bd46d1e2e0ac5b7d361a5704463807
+def devRegistry = "raj11646"
+def prodRegistry = "rajmca10"
 def buildServiceUrl = "https://5yfganz8bb.execute-api.us-east-1.amazonaws.com/prod/service/admin-cli/builds"
 
 pipeline {
@@ -26,7 +25,7 @@ pipeline {
         AWS_SECRET_KEY = credentials('AWS_SECRET_KEY')
       }
       steps {
-        git(url: 'cicd@code.appranix.net:/prana/circuit-ansible-1.git')
+        git(url: 'https://github.com/raj11646/sample-spring.git')
         script {
           def dateFormat = new SimpleDateFormat("yyyyMMdd")
           def date = new Date()
